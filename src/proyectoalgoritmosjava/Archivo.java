@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package proyectoalgoritmosjava;
-import com.csvreader.CsvReader;
-import com.csvreader.CsvWriter;
 import java.awt.List;
 import java.io.BufferedReader;
 import java.io.FileReader;
