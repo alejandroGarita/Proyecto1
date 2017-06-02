@@ -12,9 +12,11 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -33,8 +35,9 @@ public class AgregarPelicula extends JInternalFrame implements ActionListener{
     private JTextField jtxtCode;
     private JTextField jtxtTitle;
     private JTextField jtxtTotal;
-    private JTextField jtxtSubtitled;
-    private JTextField jtxtPremier;
+    
+    private JCheckBox jcbPremier;
+    private JCheckBox jcbSubtitled;
     
     private JComboBox<String> genero;
     private JButton jbtnAgregar;
@@ -50,9 +53,9 @@ public class AgregarPelicula extends JInternalFrame implements ActionListener{
         this.jlblTitle=new JLabel("Title:");
         this.jlblTitle.setBounds(10, 40, 100, 30);
         this.jlblGender=new JLabel("Gender:");
-        this.jlblGender.setBounds(10, 70, 100, 30);
+        this.jlblGender.setBounds(10, 100, 100, 30);
         this.jlblTotal=new JLabel("Total:");
-        this.jlblTotal.setBounds(10, 100, 100, 30);
+        this.jlblTotal.setBounds(10, 70, 100, 30);
         this.jlblSubtitled=new JLabel("Subtitled:");
         this.jlblSubtitled.setBounds(10, 130, 100, 30);
         this.jlblPremier=new JLabel("Premier:");
@@ -63,14 +66,15 @@ public class AgregarPelicula extends JInternalFrame implements ActionListener{
         this.jtxtTitle=new JTextField();
         this.jtxtTitle.setBounds(100, 40, 100, 30);
         this.jtxtTotal=new JTextField();
-        this.jtxtTotal.setBounds(100, 100, 100, 30);
-        this.jtxtSubtitled=new JTextField();
-        this.jtxtSubtitled.setBounds(100, 130, 100, 30);
-        this.jtxtPremier=new JTextField();
-        this.jtxtPremier.setBounds(100, 160, 100, 30);
-        
+        this.jtxtTotal.setBounds(100, 70, 100, 30);
+
+        this.jcbPremier=new JCheckBox();
+        this.jcbPremier.setBounds(100, 160, 30, 30);
+        this.jcbSubtitled=new JCheckBox();
+        this.jcbSubtitled.setBounds(100, 130, 30, 30);
+
         this.genero=new JComboBox<String>(new String[]{"Drama","Comedy","Action","Romance","Childish","Fiction"});
-        this.genero.setBounds(100, 70, 100, 30);
+        this.genero.setBounds(100, 100, 100, 30);
         this.add(genero);
         
         this.add(jlblCode);
@@ -80,11 +84,12 @@ public class AgregarPelicula extends JInternalFrame implements ActionListener{
         this.add(jlblSubtitled);
         this.add(jlblPremier);
         
+        this.add(jcbSubtitled);
+        this.add(jcbPremier);
+        
         this.add(jtxtCode);
         this.add(jtxtTitle);
         this.add(jtxtTotal);
-        this.add(jtxtSubtitled);
-        this.add(jtxtPremier);
 
         this.jbtnAgregar=new JButton("Agregar");
         this.jbtnAgregar.setBounds(10, 200, 100, 40);
@@ -110,11 +115,20 @@ public class AgregarPelicula extends JInternalFrame implements ActionListener{
                     gender="5000";
                 else if(this.genero.getSelectedItem().equals("Childish"))
                     gender="3000";
-                Pelicula p=new Pelicula(jtxtCode.getText(), jtxtTitle.getText(), gender, jtxtTotal.getText(), jtxtSubtitled.getText(), jtxtPremier.getText());
+                String premier="";
+                if(jcbPremier.isSelected()){
+                    premier="1";
+                }else premier="0";
+                String subtitled="";
+                if(jcbSubtitled.isSelected())
+                    subtitled="1";
+                else subtitled="0";
+                Pelicula p=new Pelicula(jtxtCode.getText(), jtxtTitle.getText(), gender, jtxtTotal.getText(), subtitled, premier);
                 Archivo a=new Archivo();
                 GeneroList gL=a.cargarArchivo("all");
                 gL.agregarPelicula(p);
                 a.guardarArchivo(gL);
+                JOptionPane.showMessageDialog(rootPane, "Pelicula Agregada");
                 System.out.println(gL.printList());
             } catch (IOException ex) {
                 Logger.getLogger(AgregarPelicula.class.getName()).log(Level.SEVERE, null, ex);
