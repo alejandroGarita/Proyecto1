@@ -20,35 +20,36 @@ public class GeneroList {
     }
     
     public int agregarPelicula(Pelicula nueva){
-    Nodo tempPtr, newPtr;
+        Nodo tempPtr, newPtr;
+
+        newPtr=new Nodo();
+        newPtr.setPelicula(nueva);
+        newPtr.setNextPtr(null);
+        newPtr.setPreviousPtr(null);
+
+        tempPtr=headNode;
+
+        if(tempPtr==null){
+            headNode=newPtr;
+            newPtr.setNextPtr(headNode);
+            newPtr.setPreviousPtr(headNode);
+            return 0;
+        }
     
-    newPtr=new Nodo();
-    newPtr.setPelicula(nueva);
-    newPtr.setNextPtr(null);
-    newPtr.setPreviousPtr(null);
-    
-    tempPtr=headNode;
-    
-    if(tempPtr==null){
-        headNode=newPtr;
+        // falta ordenar por nombre con compare
+
+        while(tempPtr.getNextPtr().getPelicula().getCode()!=headNode.getPelicula().getCode() ){
+            if(tempPtr.getNextPtr().getPelicula().getCode()!=nueva.getCode())
+                tempPtr=tempPtr.getNextPtr();
+            else return -1;
+        }
+        
+        tempPtr.setNextPtr(newPtr);
         newPtr.setNextPtr(headNode);
-        newPtr.setPreviousPtr(headNode);
+        headNode.setPreviousPtr(newPtr);
+        newPtr.setPreviousPtr(tempPtr);
         return 0;
-    }
-    
-    // falta ordenar por nombre con compare
-    
-    while(tempPtr.getNextPtr().getPelicula().getCode()!=headNode.getPelicula().getCode() ){
-        if(tempPtr.getNextPtr().getPelicula().getCode()!=nueva.getCode())
-            tempPtr=tempPtr.getNextPtr();
-        else return -1;
-    }
-    
-    tempPtr.setNextPtr(newPtr);
-    newPtr.setNextPtr(headNode);
-    headNode.setPreviousPtr(newPtr);
-    newPtr.setPreviousPtr(tempPtr);
-    return 0;
+        
 }// agregarPelicula
     
     public String printList(){

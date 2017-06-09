@@ -5,22 +5,41 @@
  */
 package proyectoalgoritmosjava;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Gollo
  */
 public class BuscarNombre extends javax.swing.JInternalFrame {
 
-    private GeneroList lista;
+    private GeneroList drama;
+    private GeneroList comedy;
+    private GeneroList action;
+    private GeneroList fiction;
+    private GeneroList romance;
+    private GeneroList childish;
     
     /**
      * Creates new form BuscarNombre
      */
-    public BuscarNombre(GeneroList lista) {
+    public BuscarNombre() {
         super("Buscar Pelicula");
-        this.lista=lista;
-        this.setClosable(true);
-        initComponents();
+        try {
+            Archivo archivo=new Archivo();
+            this.drama=archivo.cargarArchivo("1000");
+            this.comedy=archivo.cargarArchivo("2000");
+            this.action=archivo.cargarArchivo("4000");
+            this.romance=archivo.cargarArchivo("5000");
+            this.fiction=archivo.cargarArchivo("6000");
+            this.childish=archivo.cargarArchivo("3000");
+            this.setClosable(true);
+            initComponents();
+        } catch (IOException ex) {
+            Logger.getLogger(BuscarNombre.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -93,7 +112,26 @@ public class BuscarNombre extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        jTextArea1.setText("Codigo\tNombre\n\n"+lista.buscarPelicula(jTextField1.getText()).printList());
+        String texto="";
+        if(!drama.buscarPelicula(jTextField1.getText()).printList().equals("The list is empty.\n\n")){
+            texto+="   Gender Drama\nCodigo\tNombre\n\n"+drama.buscarPelicula(jTextField1.getText()).printList();
+        }
+        if(!comedy.buscarPelicula(jTextField1.getText()).printList().equals("The list is empty.\n\n")){
+            texto+="\n\n   Gender Comedy\nCodigo\tNombre\n\n"+comedy.buscarPelicula(jTextField1.getText()).printList();
+        }
+        if(!action.buscarPelicula(jTextField1.getText()).printList().equals("The list is empty.\n\n")){
+            texto+="\n\n   Gender Action\nCodigo\tNombre\n\n"+action.buscarPelicula(jTextField1.getText()).printList();
+        }
+        if(!romance.buscarPelicula(jTextField1.getText()).printList().equals("The list is empty.\n\n")){
+            texto+="\n\n   Gender Romance\nCodigo\tNombre\n\n"+romance.buscarPelicula(jTextField1.getText()).printList();
+        }
+        if(!fiction.buscarPelicula(jTextField1.getText()).printList().equals("The list is empty.\n\n")){
+            texto+="\n\n   Gender Fiction\nCodigo\tNombre\n\n"+fiction.buscarPelicula(jTextField1.getText()).printList();
+        }
+        if(!childish.buscarPelicula(jTextField1.getText()).printList().equals("The list is empty.\n\n")){
+            texto+="\n\n   Gender Childish\nCodigo\tNombre\n\n"+childish.buscarPelicula(jTextField1.getText()).printList();
+        }
+        jTextArea1.setText(texto);
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

@@ -193,14 +193,11 @@ public class NewJFrame extends javax.swing.JFrame implements Runnable{
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        try {
-            GeneroList g=new Archivo().cargarArchivo("all");
-            BuscarNombre buscar=new BuscarNombre(g);
+
+            BuscarNombre buscar=new BuscarNombre();
             buscar.setVisible(true);
             this.desktop.add(buscar);
-        } catch (IOException ex) {
-            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
